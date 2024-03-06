@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}Solicitação{% endblock 'title' %}
+
+{% block 'body' %}
+<div class="container mt-4">
+    {% if messages %}
+    {% for i in messages %}
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}}
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
+    
+    <div class="container d-flex justify-content-center align-items-center" style="height: 70vh;">
+        <div style="background-color: rgba(0, 0, 0, 0.5);">
+            <br>
+            
+            <div class="container">
+                <h2 class="text-center mt-4 text-color">FORMULÁRIO DE REQUISIÇÃO</h2>
+            <hr>
+            <form class="row" action="{% url 'pedido' %}" method="POST">{% csrf_token %}
+                <div class="col-md-3 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Nome do solicitante:</label>
+                    <input type="text" class="form-control" id="nome_solicitante" name="nome_solicitante" value="{{user.username}}" readonly>
+                </div>
+                <div class="col-md-3 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Nome do colaborador:</label>
+                    <input type="text" class="form-control" id="nome_colaborador" name="nome_colaborador" placeholder="Digite o nome">
+                </div>
+                <div class="col-md-3 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                </div>
+                <div class="col-md-3 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Nº do chamado:</label>
+                    <input type="text" class="form-control" id="num_chamado" name="num_chamado" placeholder="Digite o nº do chamado">
+                </div>
+                <div class="col-md-4 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Data da Solicitação:</label>
+                    <input type="text" class="form-control" id="data_solicitacao" name="data_solicitacao" readonly>
+                </div>
+                <div class="col-md-4 mt-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Tipo:</label>
+                    <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
+                        <option selected></option>
+                        <option value="Notebook">Notebook</option>
+                        <option value="Periférico">Periférico</option>
+                    </select>
+                </div>     
+                <div class="col-md-4 mt-4 mb-4">
+                    <label for="exampleFormControlInput1" class="form-label text-color">Produto:</label>
+                    <select class="form-select" aria-label="Default select example" id="produto" name="produto">
+                        <option selected></option>
+                        <option value="Lenovo E14">Lenovo E14</option>
+                        <option value="Lenovo T440">Lenovo T440</option>
+                        <option value="Lenovo T460">Lenovo T460</option>
+                        <option value="Lenovo T470">Lenovo T470</option>
+                        <option value="Lenovo T480">Lenovo T480</option>
+                        <option value="Lenovo T490">Lenovo T490</option>
+                        <option value="Teclado">Teclado</option>
+                        <option value="Mouse">Mouse</option>
+                        <option value="Adaptador HDMI">Adaptador HDMI</option>
+                    </select>
+                </div>
+                <div class="col-1 d-flex justify-content-end mb-4">
+                    <input type="submit" class="btn btn-info" value="Enviar">
+                </div>
+            </form>      
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pegando a data atual
+    var currentDate = new Date();
+
+    // Formatando a data no formato "DD/MM/AAAA"
+    var formattedDate = ('0' + currentDate.getDate()).slice(-2) + '/' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '/' + currentDate.getFullYear();
+
+    // Inserindo a data atual no campo de data da solicitação
+    document.getElementById("data_solicitacao").value = formattedDate;
+</script>
+{% endblock %}

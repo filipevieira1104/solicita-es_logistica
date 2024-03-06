@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'title' %}Solicitações recebidas{% endblock 'title' %} 
+    
+{% block 'body' %}
+<div class="container mt-4">
+    {% if messages %}
+    {% for i in messages %}
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}}
+        </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div class="container justify-content-center align-items-center" style="height: 70vh;">
+    <div class="container" style="background-color: rgba(0, 0, 0, 0.5);">
+        <h2 class="text-center mt-4 text-color">Tabela de Solicitações</h2>
+        <hr>
+    </div>
+    <div class="container">
+        <table class="container table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Solicitante</th>
+                <th scope="col">Data da Solicitação</th>
+                <th scope="col">Nome do colaborador</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Nº Chamado</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in page_obj %}  
+              <tr>
+                <td>{{i.nome_solicitante}}</td>
+                <td>{{i.data_solicitacao}}</td>
+                <td>{{i.nome_colaborador}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.num_chamado}}</td>
+                <td>{{i.tipo}}</td>
+                <td>{{i.produto}}</td>
+                <td>
+                    <div class="d-flex align-items-start">
+                        <select class="form-select" id="status{{i.id}}" aria-label="Default select example">
+                            <option value="Pendente" {% if i.status == 'Pedente' %} selected {% endif %}>Pendente</option>
+                            <option value="Em andamento" {% if i.status == 'Em andamento' %} selected {% endif %}>Em andamento</option>
+                            <option value="Atendido" {% if i.status == 'Atendido' %} selected {% endif %}>Atendido</option>
+                        </select>
+                        <button class="btn btn-primary  mb-2 ms-2" onclick="atualizarStatus('{{i.id}}')"><i class="bi bi-arrow-clockwise"></i>Atualizar</button>
+                    </div>  
+                </td>
+              </tr>
+            {% endfor %}  
+            </tbody>
+          </table>
+    </div>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+            {% endif %}
+            <li class="page-item active"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+        // Função para atualizar o status de uma solicitação
+        function atualizarStatus(id) {
+            var novoStatus = $('#status' + id).val(); // Obter o novo status selecionado
+            var csrftoken = getCookie('csrftoken');
+            $.ajax({
+                type: 'POST',
+                url: '/solicitacao/atualizar_status/', // URL onde você irá manipular a atualização do status no seu servidor
+                data: {
+                    'id': id,
+                    'novo_status': novoStatus,
+                    'csrfmiddlewaretoken': csrftoken
+                },
+                success: function(response) {
+                    alert('Status atualizado com sucesso!'); // Exibir uma mensagem de sucesso ao usuário
+                    // Você pode adicionar aqui qualquer código adicional para atualizar a interface do usuário, se necessário
+                },
+                error: function(xhr, errmsg, err) {
+                    console.error(errmsg); // Se houver algum erro, exibir no console do navegador
+                    alert('Ocorreu um erro ao atualizar o status.');
+                }
+            });
+        }
+
+        // Função para obter o valor do cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Verifique se este é o cookie que estamos procurando
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+</script>
+
+
+{% endblock 'body' %}

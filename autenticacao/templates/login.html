@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'title' %}Login{% endblock 'title' %}
+
+{% block 'body' %}
+<style>
+    body {
+        overflow: hidden;
+    }
+</style>
+ 
+<div class="container-fluid">
+        
+    <div class="row">
+        <div class="col-md-3 sidebar">
+            <div class="logo_sidebar">
+                
+                <h2 class="logo">
+                    <img style="margin-top: 50%;" class="img_logo_sidebar" src="{% static 'img/logo1.png' %}">
+                </h2>
+
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <div class="alert {{message.tags}}">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            <div style="text-align: center;" class="container">
+                <img src="{% static 'img/frac.png' %}" alt="">
+            </div>
+            
+            <div class="area_cadastrar">
+                
+                <h2 class="titulo">Seja Bem Vindo!</h2>
+                <p class="sub-titulo">Entre com sua conta</p>
+                <hr>
+                
+                <form action="{% url 'valida_login' %}" method="POST">{% csrf_token %}
+                    <i class="bi bi-person-fill"></i><span class="bold">Nome de usuário:</span>
+                    <input class="form-control input-form" name="nome" id="nome" type="text" placeholder="Digite seu nome..." required>
+                    <br>
+                    <i class="bi bi-lock-fill"></i><span class="bold">Senha:</span>
+                    <div class="input-group">
+                        <input class="form-control input-form" name="senha" id="senha" type="password" placeholder="Digite sua senha..." required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary mt-3" type="button" id="showPasswordBtn">
+                                <i class="bi bi-eye" style="font-size: 1rem;"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn-first">Logar</button>
+                </form>
+                <br>
+                <h3 style="position: flex; bottom: 65px; font-weight: bold">Não tem uma conta ?&nbsp <a href="{% url 'cadastro' %}" class="btn btn-outline-primary btn-md">Registre-se</a> </h3>
+            </div>
+
+        </div>
+
+    </div>
+    
+</div>
+
+<script>
+    document.getElementById('showPasswordBtn').addEventListener('click', function() {
+        const senhaInput = document.getElementById('senha');
+        const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        senhaInput.setAttribute('type', tipo);
+        this.querySelector('i').classList.toggle('bi-eye');
+        this.querySelector('i').classList.toggle('bi-eye-slash');
+    });
+</script>
+{% endblock %}
+
