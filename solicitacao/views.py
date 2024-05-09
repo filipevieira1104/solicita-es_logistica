@@ -26,8 +26,8 @@ def pedido(request):
             return redirect('/solicitacao/pedido/')
         
         # valida se email corresponde ao dominio desejado 
-        if not re.match(r'.*@telefonica\.com$', email):
-            messages.add_message(request, messages.WARNING, 'E-mail incorreto, Favor insira um e-mail TELEFONICA !')
+        if not re.match(r'.*@speedlogi\.com$', email):
+            messages.add_message(request, messages.WARNING, 'E-mail incorreto, Favor insira um e-mail SPEEDLOGI !')
             return redirect('/solicitacao/pedido/')
         
         # verifica se já existe uma solicitação com o número de chamado

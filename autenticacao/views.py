@@ -19,8 +19,8 @@ def cadastro(request):
             messages.add_message(request, messages.ERROR, 'Nome, email e cargo não podem estar vazio !')
             return redirect('/autenticacao/cadastro/')
         
-        if not re.match(r'.*@fractaliasystems\.es$', email):
-            messages.add_message(request, messages.WARNING, 'E-mail incorreto, Favor insira um e-mail Fractalia !')
+        if not re.match(r'.*@speedlogi\.com$', email):
+            messages.add_message(request, messages.WARNING, 'E-mail incorreto, Favor insira um e-mail SPEEDLOGI !')
             return redirect('/autenticacao/cadastro/')
         
         if len(senha) < 8:

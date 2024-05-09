@@ -9,41 +9,37 @@
         overflow: hidden;
     }
 </style>
-<div class="container mt-4">
-    {% if messages %}
-    {% for i in messages %}
-        <div class="alert {{i.tags}}" role="alert">
-            {{i}}
-        </div>
-    {% endfor %}
-    {% endif %}
-</div>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3 sidebar">
-            <div class="logo_sidebar">
-                <h2 class="logo">
-                    <img style="margin-top: 50%;" class="img_logo_sidebar" src="{% static 'img/logo1.png' %}">
-                </h2>
-
+            <div style="margin-top: 60%;" class="container text-center">
+                <h2 style="color: orange; font-size: 50px;">SpeedLOGI</h2>
             </div>
-
-            
+            <div class="logo_sidebar mt-5">
+                <h2 class="logo">
+                    <img class="img_logo_sidebar" src="{% static 'img/papaleguas-removebg-preview.png' %}">
+                </h2>
+            </div>
+            <div class="container mt-5 text-center">
+                <h3 style="color: white;">Controle seu fluxo de atendimento logístico</h3>
+            </div>
         </div>
 
         <div class="col-md-9">
             {% if messages %}
             <br>
-    {% for message in messages %}
-        <div class="alert {{message.tags}}">
-            {{message}}
-        </div>
-    {% endfor %}
-{% endif %}
-            <div style="text-align: center;" class="container">
-                <img src="{% static 'img/frac.png' %}" alt="">
-            </div>
+            {% for message in messages %}
+                <div class="alert {{message.tags}} d-flex justify-content-between align-items-center">
+                    <span>{{message}}</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+<div style="text-align: center; margin-top: 15%;" class="container">
+    <img src="" alt="">
+</div>
             
             <div class="area_cadastrar">
                 <h2 class="titulo">Seja Bem Vindo!</h2>
@@ -51,15 +47,15 @@
                 <hr>
                 
                 <form action="{% url 'cadastro' %}" method="POST">{% csrf_token %}
-                    <i class="bi bi-person-fill"></i><span class="bold">Nome de usuário:</span>
+                    <i class="bi bi-person-fill"></i><span class="bold"> Nome de usuário:</span>
                     <input class= "form-control input-form" name="nome" type="text" id="nome" placeholder="Digite seu nome..." required>
                     <br>
-                    <i class="bi bi-envelope-at-fill"></i><span class="bold">E-mail:</span>
+                    <i class="bi bi-envelope-at-fill"></i><span class="bold"> E-mail:</span>
                     <input class="form-control input-form" name="email" id="email" type="email" placeholder="Digite seu E-mail..." required>
                     <br>
                     <div class="row">
                         <div class="col-md">
-                            <i class="bi bi-lock-fill"></i><span class="bold">Senha:</span>
+                            <i class="bi bi-lock-fill"></i><span class="bold"> Senha:</span>
                             <div class="input-group">
                                 <input class="form-control input-form" name="senha" id="senha" type="password" placeholder="Digite sua senha..." required>
                                 <div class="input-group-append">

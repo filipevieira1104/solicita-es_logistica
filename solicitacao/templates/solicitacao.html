@@ -5,11 +5,13 @@
 {% block 'body' %}
 <div class="container mt-4">
     {% if messages %}
-    {% for i in messages %}
-        <div class="alert {{i.tags}}" role="alert">
-            {{i}}
-        </div>
-    {% endfor %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}} d-flex justify-content-between align-items-center">
+            <span>{{message}}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
     {% endif %}
 </div>
     
@@ -18,31 +20,31 @@
             <br>
             
             <div class="container">
-                <h2 class="text-center mt-4 text-color">FORMULÁRIO DE REQUISIÇÃO</h2>
+                <h2 class="text-center mt-4 text-color"><i class="bi bi-clipboard-check"></i> FORMULÁRIO DE REQUISIÇÃO</h2>
             <hr>
             <form class="row" action="{% url 'pedido' %}" method="POST">{% csrf_token %}
                 <div class="col-md-3 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Nome do solicitante:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-person-add"></i> Nome do solicitante:</label>
                     <input type="text" class="form-control" id="nome_solicitante" name="nome_solicitante" value="{{user.username}}" readonly>
                 </div>
                 <div class="col-md-3 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Nome do colaborador:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-person-add"></i> Nome do colaborador:</label>
                     <input type="text" class="form-control" id="nome_colaborador" name="nome_colaborador" placeholder="Digite o nome">
                 </div>
                 <div class="col-md-3 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Email:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-envelope-at"></i> Email:</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                 </div>
                 <div class="col-md-3 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Nº do chamado:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-pen"></i> Nº do chamado:</label>
                     <input type="text" class="form-control" id="num_chamado" name="num_chamado" placeholder="Digite o nº do chamado">
                 </div>
                 <div class="col-md-4 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Data da Solicitação:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-calendar-date"></i> Data da Solicitação:</label>
                     <input type="text" class="form-control" id="data_solicitacao" name="data_solicitacao" readonly>
                 </div>
                 <div class="col-md-4 mt-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Tipo:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-list-ul"></i> Tipo:</label>
                     <select class="form-select" aria-label="Default select example" id="tipo" name="tipo">
                         <option selected></option>
                         <option value="Notebook">Notebook</option>
@@ -50,7 +52,7 @@
                     </select>
                 </div>     
                 <div class="col-md-4 mt-4 mb-4">
-                    <label for="exampleFormControlInput1" class="form-label text-color">Produto:</label>
+                    <label for="exampleFormControlInput1" class="form-label text-color"><i class="bi bi-basket2"></i> Produto:</label>
                     <select class="form-select" aria-label="Default select example" id="produto" name="produto">
                         <option selected></option>
                         <option value="Lenovo E14">Lenovo E14</option>
